@@ -1,0 +1,47 @@
+@import '../styles/variables.scss';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: $bg-color;
+  font-size: 16px;
+  line-height: 1.3;
+  font-weight: 500;
+}
+
+input {
+  font-size: 16px;
+  line-height: 1.3;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}

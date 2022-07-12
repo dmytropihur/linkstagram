@@ -1,0 +1,70 @@
+@import '../../styles/variables.scss';
+
+.form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 35px;
+
+  @media (min-width: 1300px) {
+    flex: 0;
+  }
+}
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.label {
+  display: inline-block;
+  width: 100%;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.7;
+  color: $text-color;
+}
+
+.input {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border: 1px solid $secondary-color;
+  border-radius: 12px;
+  margin-top: 2px;
+  &::placeholder {
+    font-weight: 400;
+    opacity: 0.25;
+  }
+}
+
+.buttonWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: auto 0 0 0;
+
+  @media (min-width: 768px) {
+    margin: 0;
+    gap: 16px;
+  }
+}
+
+.linkWrapper {
+  display: block;
+  font-size: 12px;
+  line-height: 1.7;
+  font-weight: 400;
+  color: $text-color;
+  text-align: center;
+
+  @media (min-width: 1300px) {
+    order: 2;
+  }
+}
+
+.link {
+  color: $accent-color;
+  margin-left: 12px;
+}
