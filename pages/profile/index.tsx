@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
 
 const Profile: NextPage = () => {
-  return <div>index</div>;
+  return <div>Profile</div>;
 };
 
 export default Profile;
