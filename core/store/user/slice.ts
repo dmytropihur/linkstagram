@@ -5,13 +5,13 @@ import { BASE_API_URL } from '../../config/constants';
 import fetchAccount from '../../utils/fetchAccount';
 import getUserFromLS from '../../utils/getUserFromLS';
 
-import { LoginProps, RegisterProps, User, UserSliceState } from './types';
+import { AuthProps, User, UserSliceState } from './types';
 
 const initialState: UserSliceState = getUserFromLS();
 
 export const login = createAsyncThunk(
   'user/login',
-  async (props: LoginProps, { rejectWithValue }) => {
+  async (props: AuthProps, { rejectWithValue }) => {
     try {
       const { headers } = await axios.post(`${BASE_API_URL}/login`, props);
 
@@ -26,7 +26,7 @@ export const login = createAsyncThunk(
 
 export const register = createAsyncThunk(
   'user/register',
-  async (props: RegisterProps, { rejectWithValue }) => {
+  async (props: AuthProps, { rejectWithValue }) => {
     try {
       const res = await axios.post(`${BASE_API_URL}/create-account`, props);
 

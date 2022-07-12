@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import { useAppDispatch } from '../../core/store';
 import selectUser from '../../core/store/user/selectors';
 import { login } from '../../core/store/user/slice';
-import { LoginProps } from '../../core/store/user/types';
+import { AuthProps } from '../../core/store/user/types';
 import image from '../../public/images/auth.svg';
 import Form from '../../ui/components/Form/Form';
 import styles from '../../ui/styles/Login.module.scss';
@@ -27,7 +27,7 @@ const SignIn: NextPage = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const handleSubmit = (values: LoginProps) => {
+  const handleSubmit = (values: AuthProps) => {
     dispatch(login({ login: values.login, password: values.password }));
   };
 

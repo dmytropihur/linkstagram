@@ -1,12 +1,7 @@
 import Status from '../types';
 
-export type LoginProps = {
-  login: string;
-  password: string;
-};
-
-export type RegisterProps = {
-  username: string;
+export type AuthProps = {
+  username?: string;
   login: string;
   password: string;
 };

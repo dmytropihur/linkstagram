@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import { useAppDispatch } from '../../core/store';
 import selectUser from '../../core/store/user/selectors';
 import { register } from '../../core/store/user/slice';
-import { RegisterProps } from '../../core/store/user/types';
+import { AuthProps } from '../../core/store/user/types';
 import image from '../../public/images/auth.svg';
 import Form from '../../ui/components/Form/Form';
 import styles from '../../ui/styles/Login.module.scss';
@@ -30,7 +30,7 @@ const SignUp: NextPage = () => {
   const dispatch = useAppDispatch();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSubmit = (values: RegisterProps) => {
+  const handleSubmit = (values: AuthProps) => {
     dispatch(
       register({
         username: values.username,

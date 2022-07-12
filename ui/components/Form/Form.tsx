@@ -3,7 +3,7 @@ import { Formik, Form as Frm, Field, ErrorMessage } from 'formik';
 import { NextPage } from 'next';
 import Link from 'next/link';
 
-import { LoginProps, RegisterProps } from '../../../core/store/user/types';
+import { AuthProps } from '../../../core/store/user/types';
 import Button from '../Button/Button';
 import Error from '../Error';
 
@@ -16,7 +16,7 @@ type FormProps = {
     password: string;
     username?: string;
   };
-  handleSubmit: (values: LoginProps | RegisterProps) => void;
+  handleSubmit: (values: AuthProps) => void;
   schema: object;
 };
 
