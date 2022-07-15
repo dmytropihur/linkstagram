@@ -32,7 +32,7 @@ const Form: NextPage<FormProps> = ({
       onSubmit={handleSubmit}
       validationSchema={schema}
     >
-      {() => (
+      {({ isValid }) => (
         <Frm className={styles.form}>
           <div className={styles.inputWrapper}>
             <label className={styles.label}>
@@ -88,7 +88,9 @@ const Form: NextPage<FormProps> = ({
                 </Link>
               )}
             </span>
-            <Button text={type} type="accent" />
+            <Button variant="accent" type="submit" disabled={!isValid}>
+              {type}
+            </Button>
           </div>
         </Frm>
       )}

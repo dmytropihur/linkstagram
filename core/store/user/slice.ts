@@ -1,7 +1,9 @@
+/* eslint-disable no-param-reassign */
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
-import { BASE_API_URL } from '../../config/constants';
+import BASE_API_URL from '../../config/constants';
 import fetchAccount from '../../utils/fetchAccount';
 import getUserFromLS from '../../utils/getUserFromLS';
 
@@ -18,7 +20,13 @@ export const login = createAsyncThunk(
       localStorage.setItem('token', headers.authorization);
 
       return fetchAccount(headers.authorization);
-    } catch {
+    } catch (err: unknown) {
+      if (err instanceof AxiosError) {
+        const error = JSON.parse(err?.request?.response);
+
+        return rejectWithValue(error['field-error'][1]);
+      }
+
       return rejectWithValue('Error');
     }
   },
@@ -31,7 +39,13 @@ export const register = createAsyncThunk(
       const res = await axios.post(`${BASE_API_URL}/create-account`, props);
 
       return res;
-    } catch {
+    } catch (err: unknown) {
+      if (err instanceof AxiosError) {
+        const error = JSON.parse(err?.request?.response);
+
+        return rejectWithValue(error['field-error'][1]);
+      }
+
       return rejectWithValue('Error');
     }
   },
@@ -44,36 +58,34 @@ const userSlice = createSlice({
     logout(state) {
       localStorage.removeItem('user');
       localStorage.removeItem('token');
-      // eslint-disable-next-line no-param-reassign
       state.user = {} as User;
+      state.status = 'idle';
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state) => {
-        // eslint-disable-next-line no-param-reassign
         state.status = 'pending';
       })
       .addCase(login.fulfilled, (state, action: PayloadAction<User>) => {
-        // eslint-disable-next-line no-param-reassign
         state.status = 'fulfilled';
-        // eslint-disable-next-line no-param-reassign
         state.user = action.payload;
+        state.loginError = '';
       })
-      .addCase(login.rejected, (state) => {
-        // eslint-disable-next-line no-param-reassign
+      .addCase(login.rejected, (state, action) => {
+        state.loginError = action.payload as string;
         state.status = 'rejected';
       })
       .addCase(register.pending, (state) => {
-        // eslint-disable-next-line no-param-reassign
         state.status = 'pending';
       })
       .addCase(register.fulfilled, (state) => {
-        // eslint-disable-next-line no-param-reassign
+        state.registerError = '';
+        state.loginError = '';
         state.status = 'fulfilled';
       })
-      .addCase(register.rejected, (state) => {
-        // eslint-disable-next-line no-param-reassign
+      .addCase(register.rejected, (state, action) => {
+        state.registerError = action.payload as string;
         state.status = 'rejected';
       });
   },

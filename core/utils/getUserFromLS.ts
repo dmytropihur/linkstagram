@@ -4,14 +4,21 @@ import { User } from '../store/user/types';
 const getUserFromLS = () => {
   if (typeof window !== 'undefined') {
     const data = localStorage.getItem('user');
-    const user = data ? JSON.parse(data) : {};
+    const user = data ? JSON.parse(data) : null;
 
-    return { status: 'idle' as Status, user: user as User };
+    return {
+      status: 'idle' as Status,
+      user: user as User,
+      registerError: '',
+      loginError: '',
+    };
   }
 
   return {
     status: 'idle' as Status,
-    user: {} as User,
+    user: null,
+    registerError: '',
+    loginError: '',
   };
 };
 

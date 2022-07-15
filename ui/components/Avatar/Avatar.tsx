@@ -1,4 +1,5 @@
 import { NextPage } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import icon from '../../../public/images/icon.png';
@@ -14,24 +15,24 @@ const Avatar: NextPage<AvatarProps> = ({ size, gradient }) => {
   return (
     <Link href="profile">
       <a className={styles.root}>
-        {gradient && (
-          <div className={`${styles[`gradient-${size}`]} ${styles.gradient}`}>
-            <img
-              className={`${styles[`icon-${size}-gradient`]} ${styles.icon}`}
-              src={icon.src}
-              alt=""
-            />
-          </div>
-        )}
-        {!gradient && (
-          <div>
-            <img
-              className={`${styles[`icon-${size}`]} ${styles.icon}`}
-              src={icon.src}
-              alt=""
-            />
-          </div>
-        )}
+        <div
+          className={
+            gradient ? `${styles[`gradient-${size}`]} ${styles.gradient}` : ''
+          }
+        >
+          <Image
+            className={
+              gradient
+                ? `${styles[`icon-${size}-gradient`]} ${styles.icon}`
+                : `${styles[`icon-${size}`]} ${styles.icon}
+              `
+            }
+            width="100%"
+            height="100%"
+            src={icon.src}
+            alt=""
+          />
+        </div>
       </a>
     </Link>
   );

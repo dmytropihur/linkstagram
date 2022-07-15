@@ -1,5 +1,5 @@
-import { NextPage } from 'next';
 import Link from 'next/link';
+import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { useAppDispatch } from '../../../core/store';
@@ -9,7 +9,7 @@ import Avatar from '../Avatar/Avatar';
 
 import styles from './Header.module.scss';
 
-const Header: NextPage = () => {
+const Header: React.FC = () => {
   const { user } = useSelector(selectUser);
   const dispatch = useAppDispatch();
 
@@ -24,7 +24,7 @@ const Header: NextPage = () => {
           <a className={styles.logo}>Linkstagram</a>
         </Link>
         <div className={styles.linkWrapper}>
-          {user.username && (
+          {user?.username ? (
             <>
               <button
                 type="button"
@@ -33,10 +33,9 @@ const Header: NextPage = () => {
               >
                 Logout
               </button>
-              <Avatar size="sm" />
+              <Avatar size="sm" gradient />
             </>
-          )}
-          {!user.username && (
+          ) : (
             <>
               <Link href="/login">
                 <a className={styles.link}>Login</a>

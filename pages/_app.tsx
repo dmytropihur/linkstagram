@@ -7,7 +7,6 @@ import { store } from '../core/store';
 import Layout from '../ui/components/Layout/Layout';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  // eslint-disable-next-line react/jsx-props-no-spreading
   return (
     <Provider store={store}>
       <Layout>

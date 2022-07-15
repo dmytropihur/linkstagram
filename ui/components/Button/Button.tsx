@@ -1,25 +1,33 @@
 import { NextPage } from 'next';
+import { ReactNode } from 'react';
 
 import styles from './Button.module.scss';
 
 type ButtonProps = {
-  type?: string;
-  text: string;
+  variant?: string;
   disabled?: boolean;
+  children: ReactNode;
+  type: 'button' | 'submit' | 'reset';
 };
 
-const Button: NextPage<ButtonProps> = ({ type, text, disabled }) => {
+const Button: NextPage<ButtonProps> = ({
+  type,
+  variant,
+  disabled,
+  children,
+}) => {
   return (
     <button
-      type="submit"
+      // eslint-disable-next-line react/button-has-type
+      type={type}
       disabled={disabled}
       className={`${
-        type === 'accent'
-          ? styles[`button-${type}`]
+        variant === 'accent'
+          ? styles[`button-${variant}`]
           : `${styles[`button-regular`]}`
       } ${styles.button}`}
     >
-      {text}
+      {children}
     </button>
   );
 };

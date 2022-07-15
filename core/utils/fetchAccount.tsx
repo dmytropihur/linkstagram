@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { BASE_API_URL } from '../config/constants';
+import BASE_API_URL from '../config/constants';
 
 import setUserToLS from './setUserToLS';
 

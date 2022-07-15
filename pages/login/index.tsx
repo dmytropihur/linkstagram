@@ -9,6 +9,7 @@ import selectUser from '../../core/store/user/selectors';
 import { login } from '../../core/store/user/slice';
 import { AuthProps } from '../../core/store/user/types';
 import image from '../../public/images/auth.svg';
+import Error from '../../ui/components/Error';
 import Form from '../../ui/components/Form/Form';
 import styles from '../../ui/styles/Login.module.scss';
 
@@ -23,7 +24,7 @@ const LoginSchema = Yup.object().shape({
 });
 
 const SignIn: NextPage = () => {
-  const { status, user } = useSelector(selectUser);
+  const { status, user, loginError } = useSelector(selectUser);
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -41,6 +42,11 @@ const SignIn: NextPage = () => {
     <section className={styles.section}>
       <img className={styles.img} src={image.src} alt="" />
       <div className={styles.wrapper}>
+        {loginError && (
+          <Error>
+            <div>{loginError}</div>
+          </Error>
+        )}
         <h1 className={styles.title}>Log In</h1>
         <Form
           type="Sign In"
