@@ -1,11 +1,9 @@
-import axios from 'axios';
+import setUserToLS from '../utils/setUserToLS';
 
-import BASE_API_URL from '../config/constants';
-
-import setUserToLS from './setUserToLS';
+import axios from './api/axios';
 
 const fetchAccount = async (token: string) => {
-  const { data } = await axios.get(`${BASE_API_URL}/account`, {
+  const { data } = await axios.get(`/account`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

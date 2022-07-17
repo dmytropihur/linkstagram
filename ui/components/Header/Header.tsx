@@ -2,10 +2,13 @@ import Link from 'next/link';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { useAppDispatch } from '../../../core/store';
-import selectUser from '../../../core/store/user/selectors';
-import { logout } from '../../../core/store/user/slice';
+import { ROUTES } from '@/core/config/constants';
+import { useAppDispatch } from '@/core/store';
+import selectUser from '@/core/store/user/selectors';
+import { logout } from '@/core/store/user/slice';
+
 import Avatar from '../Avatar/Avatar';
+import LinkComponent from '../Link';
 
 import styles from './Header.module.scss';
 
@@ -20,7 +23,7 @@ const Header: React.FC = () => {
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
-        <Link href="/">
+        <Link href={ROUTES.home}>
           <a className={styles.logo}>Linkstagram</a>
         </Link>
         <div className={styles.linkWrapper}>
@@ -37,12 +40,12 @@ const Header: React.FC = () => {
             </>
           ) : (
             <>
-              <Link href="/login">
-                <a className={styles.link}>Login</a>
-              </Link>
-              <Link href="/register">
-                <a className={styles.link}>Sigh Up</a>
-              </Link>
+              <LinkComponent path={ROUTES.login} styleProp="link">
+                Login
+              </LinkComponent>
+              <LinkComponent path={ROUTES.register} styleProp="link">
+                Sign Up
+              </LinkComponent>
             </>
           )}
         </div>

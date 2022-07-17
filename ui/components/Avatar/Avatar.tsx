@@ -1,8 +1,7 @@
-import { NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import icon from '../../../public/images/icon.png';
+import icon from '@/public/images/icon.png';
 
 import styles from './Avatar.module.scss';
 
@@ -11,7 +10,7 @@ type AvatarProps = {
   gradient?: boolean;
 };
 
-const Avatar: NextPage<AvatarProps> = ({ size, gradient }) => {
+const Avatar: React.FC<AvatarProps> = ({ size, gradient }) => {
   return (
     <Link href="profile">
       <a className={styles.root}>

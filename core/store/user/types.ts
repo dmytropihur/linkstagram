@@ -19,8 +19,7 @@ export type User = {
 };
 
 export interface UserSliceState {
-  loginError: string;
-  registerError: string;
+  error: string | null;
   status: Status;
   user: User | null;
 }

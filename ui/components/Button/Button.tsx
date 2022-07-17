@@ -1,4 +1,3 @@
-import { NextPage } from 'next';
 import { ReactNode } from 'react';
 
 import styles from './Button.module.scss';
@@ -7,11 +6,11 @@ type ButtonProps = {
   variant?: string;
   disabled?: boolean;
   children: ReactNode;
-  type: 'button' | 'submit' | 'reset';
+  type?: 'button' | 'submit' | 'reset';
 };
 
-const Button: NextPage<ButtonProps> = ({
-  type,
+const Button: React.FC<ButtonProps> = ({
+  type = 'button',
   variant,
   disabled,
   children,

@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { Formik, Form as Frm, Field, ErrorMessage } from 'formik';
-import { NextPage } from 'next';
+import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik';
 import Link from 'next/link';
 
-import { AuthProps } from '../../../core/store/user/types';
+import { ROUTES } from '@/core/config/constants';
+import { AuthProps } from '@/core/store/user/types';
+
 import Button from '../Button/Button';
 import Error from '../Error';
 
@@ -20,7 +21,7 @@ type FormProps = {
   schema: object;
 };
 
-const Form: NextPage<FormProps> = ({
+const Form: React.FC<FormProps> = ({
   type,
   initialValues,
   handleSubmit,
@@ -33,7 +34,7 @@ const Form: NextPage<FormProps> = ({
       validationSchema={schema}
     >
       {({ isValid }) => (
-        <Frm className={styles.form}>
+        <FormikForm className={styles.form}>
           <div className={styles.inputWrapper}>
             <label className={styles.label}>
               Email
@@ -78,12 +79,12 @@ const Form: NextPage<FormProps> = ({
             <span className={styles.linkWrapper}>
               Don&apos;t have an account?
               {type === 'Sign In' && (
-                <Link href="/register">
+                <Link href={ROUTES.register}>
                   <a className={styles.link}>Sign Up</a>
                 </Link>
               )}
               {type === 'Sign Up' && (
-                <Link href="/login">
+                <Link href={ROUTES.login}>
                   <a className={styles.link}>Log In</a>
                 </Link>
               )}
@@ -92,7 +93,7 @@ const Form: NextPage<FormProps> = ({
               {type}
             </Button>
           </div>
-        </Frm>
+        </FormikForm>
       )}
     </Formik>
   );

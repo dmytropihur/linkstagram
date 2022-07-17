@@ -9,16 +9,14 @@ const getUserFromLS = () => {
     return {
       status: 'idle' as Status,
       user: user as User,
-      registerError: '',
-      loginError: '',
+      error: null,
     };
   }
 
   return {
     status: 'idle' as Status,
     user: null,
-    registerError: '',
-    loginError: '',
+    error: null,
   };
 };
 
