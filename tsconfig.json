@@ -17,9 +17,9 @@
     "useUnknownInCatchVariables": false,
     "baseUrl": ".",
     "paths": {
-      "@/core/*": ["core/*"],
-      "@/public/*": ["public/*"],
-      "@/ui/*": ["ui/*"]
+      "@/core/*": ["src/core/*"],
+      "@/ui/*": ["src/ui/*"],
+      "@/public/*": ["public/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
