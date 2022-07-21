@@ -1,4 +1,4 @@
-import cx from 'classnames';
+import cn from 'classnames';
 
 import styles from './button.module.scss';
 
@@ -7,11 +7,12 @@ interface Props
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
   > {
+  className?: string;
   variant?: 'accent' | 'regular';
 }
 
 const Button: React.FC<Props> = (props) => {
-  const { variant, type, children, disabled, ...otherProps } = props;
+  const { variant, type, children, disabled, className, ...otherProps } = props;
 
   return (
     <button
@@ -19,7 +20,7 @@ const Button: React.FC<Props> = (props) => {
       // eslint-disable-next-line react/button-has-type
       type={type}
       disabled={disabled}
-      className={cx(styles.button, styles[`button-${variant}`])}
+      className={cn(styles.button, styles[`button-${variant}`], className)}
     >
       {children}
     </button>
