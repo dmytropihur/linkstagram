@@ -1,0 +1,26 @@
+@import '../../styles/variables.scss';
+
+.button {
+  padding: 14px;
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  transition: transform 0.2s ease-in-out;
+  &:disabled {
+    background-color: $secondary-color;
+    color: $white-color;
+  }
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.01);
+  }
+}
+
+.button-regular {
+  background-color: $white-color;
+}
+
+.button-accent {
+  background-color: $accent-color;
+  color: $white-color;
+}
