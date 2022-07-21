@@ -1,5 +1,4 @@
-import Status from '../store/types';
-import { User } from '../store/user/types';
+import { Status, Profile } from '../store/types';
 
 const getUserFromLS = () => {
   if (typeof window !== 'undefined') {
@@ -8,7 +7,7 @@ const getUserFromLS = () => {
 
     return {
       status: 'idle' as Status,
-      user: user as User,
+      user: user as Profile,
       error: null,
     };
   }

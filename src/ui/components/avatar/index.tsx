@@ -1,17 +1,21 @@
-import Image from 'next/image';
+import Image from 'next/future/image';
 import Link from 'next/link';
+import { useState } from 'react';
 
 import ROUTES from '@/core/config/routes';
-import icon from '@/public/images/icon.png';
+import img from '@/public/images/undefined-user.svg';
 
 import styles from './avatar.module.scss';
 
 type AvatarProps = {
   size: 'sm' | 'md' | 'lg';
   gradient?: boolean;
+  src: string | null;
 };
 
-const Avatar: React.FC<AvatarProps> = ({ size, gradient }) => {
+const Avatar: React.FC<AvatarProps> = ({ size, src, gradient }) => {
+  const [source, setSource] = useState(src);
+
   return (
     <Link href={ROUTES.profile}>
       <a className={styles.root}>
@@ -27,9 +31,12 @@ const Avatar: React.FC<AvatarProps> = ({ size, gradient }) => {
                 : `${styles[`icon-${size}`]} ${styles.icon}
               `
             }
-            width="100%"
-            height="100%"
-            src={icon.src}
+            onError={() => {
+              setSource(img);
+            }}
+            width={100}
+            height={100}
+            src={source || img}
             alt="User avatar"
           />
         </div>
