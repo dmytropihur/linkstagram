@@ -22,7 +22,7 @@ const Header: React.FC = () => {
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
-        <LinkComponent path={ROUTES.home} styleProp="logo">
+        <LinkComponent path={ROUTES.home} className={styles.logo}>
           Linkstagram
         </LinkComponent>
         <div className={styles.linkWrapper}>

@@ -4,8 +4,8 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
-import { EMAIL_FIELD_VALIDATION } from '@/core/config/constants';
 import ROUTES from '@/core/config/routes';
+import { EMAIL_FIELD_VALIDATION } from '@/core/config/validation';
 import { useAppDispatch } from '@/core/store';
 import selectUser from '@/core/store/user/selectors';
 import { login, register } from '@/core/store/user/slice';

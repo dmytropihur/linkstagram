@@ -1,18 +1,17 @@
-import { ReactNode } from 'react';
-
 import styles from './button.module.scss';
 
-type ButtonProps = {
-  variant?: string;
-  disabled?: boolean;
-  children: ReactNode;
-  type?: 'button' | 'submit' | 'reset';
-};
+interface Props
+  extends React.DetailedHTMLProps<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > {
+  variant?: 'accent' | 'regular';
+}
 
-const Button: React.FC<ButtonProps> = ({
+const Button: React.FC<Props> = ({
   type = 'button',
-  variant,
   disabled,
+  variant,
   children,
 }) => {
   return (

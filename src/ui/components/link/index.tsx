@@ -5,14 +5,22 @@ import styles from './link.module.scss';
 
 type LinkProps = {
   path: string;
-  styleProp: string;
+  styleProp?: 'link';
   children: ReactNode;
+  className?: string;
 };
 
-const LinkComponent: React.FC<LinkProps> = ({ path, styleProp, children }) => {
+const LinkComponent: React.FC<LinkProps> = ({
+  path,
+  className,
+  styleProp,
+  children,
+}) => {
   return (
     <Link href={path}>
-      <a className={`${styles}.${styleProp}`}>{children}</a>
+      <a className={styleProp ? `${styles[styleProp]}` : `${className}`}>
+        {children}
+      </a>
     </Link>
   );
 };
