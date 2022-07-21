@@ -1,3 +1,5 @@
+import cx from 'classnames';
+
 import styles from './button.module.scss';
 
 interface Props
@@ -8,20 +10,16 @@ interface Props
   variant?: 'accent' | 'regular';
 }
 
-const Button: React.FC<Props> = ({
-  type = 'button',
-  disabled,
-  variant,
-  children,
-}) => {
+const Button: React.FC<Props> = (props) => {
+  const { variant, type, children, disabled, ...otherProps } = props;
+
   return (
     <button
+      {...otherProps}
       // eslint-disable-next-line react/button-has-type
       type={type}
       disabled={disabled}
-      className={`${
-        variant ? styles[`button-${variant}`] : `${styles[`button-regular`]}`
-      } ${styles.button}`}
+      className={cx(styles.button, styles[`button-${variant}`])}
     >
       {children}
     </button>
