@@ -6,7 +6,6 @@ const HomePage: React.FC = () => {
   return (
     <div className={styles.container}>
       <History />
-      <div>Index</div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from 'next/future/image';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -67,7 +67,7 @@ const Auth: React.FC<AuthPageProps> = ({ type }) => {
       router.push(ROUTES.home);
     }
 
-    if (status === 'fulfilled') {
+    if (status === 'fulfilled' && !user?.username) {
       router.push(ROUTES.login);
     }
   }, [status]);

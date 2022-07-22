@@ -1,4 +1,5 @@
-import { Status, Profile } from '../types';
+import { Profile } from '@/core/typings/profile';
+import { Status } from '@/core/typings/status';
 
 export type AuthProps = {
   username?: string;

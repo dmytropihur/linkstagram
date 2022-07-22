@@ -5,9 +5,8 @@ import { AxiosError } from 'axios';
 import { API_ENDPOINTS } from '@/core/config/endpoints';
 import axios from '@/core/services/api/axios';
 import fetchAccount from '@/core/services/fetch-account';
+import { Profile } from '@/core/typings/profile';
 import getUserFromLS from '@/core/utils/get-user-from-ls';
-
-import { Profile } from '../types';
 
 import { AuthProps, UserSliceState } from './types';
 

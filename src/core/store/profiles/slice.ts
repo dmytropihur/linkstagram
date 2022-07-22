@@ -4,8 +4,7 @@ import { AxiosError } from 'axios';
 
 import { API_ENDPOINTS } from '@/core/config/endpoints';
 import axios from '@/core/services/api/axios';
-
-import { Profile } from '../types';
+import { Profile } from '@/core/typings/profile';
 
 import { ProfilesSliceState } from './types';
 
@@ -13,7 +12,6 @@ const initialState: ProfilesSliceState = {
   error: null,
   status: 'idle',
   profiles: [],
-  profile: null,
 };
 
 export const fetchProfiles = createAsyncThunk(
@@ -21,8 +19,6 @@ export const fetchProfiles = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await axios.get(API_ENDPOINTS.profiles);
-
-      console.log(data);
 
       return data;
     } catch (err: unknown) {

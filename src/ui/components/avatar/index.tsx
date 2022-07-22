@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 import ROUTES from '@/core/config/routes';
-import img from '@/public/images/undefined-user.svg';
+import undefinedUserImg from '@/public/images/undefined-user.svg';
 
 import styles from './avatar.module.scss';
 
@@ -32,11 +32,11 @@ const Avatar: React.FC<AvatarProps> = ({ size, src, gradient }) => {
               `
             }
             onError={() => {
-              setSource(img);
+              setSource(undefinedUserImg);
             }}
             width={100}
             height={100}
-            src={source || img}
+            src={source || undefinedUserImg}
             alt="User avatar"
           />
         </div>

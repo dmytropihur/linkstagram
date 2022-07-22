@@ -1,5 +1,3 @@
-export type Status = 'idle' | 'pending' | 'fulfilled' | 'rejected';
-
 export type Profile = {
   username: string;
   description: string;

@@ -1,8 +1,8 @@
-import { Profile, Status } from '../types';
+import { Profile } from '@/core/typings/profile';
+import { Status } from '@/core/typings/status';
 
 export interface ProfilesSliceState {
   error: string | null;
-  profile: Profile | null;
   profiles: Profile[] | null;
   status: Status;
 }

@@ -1,4 +1,5 @@
-import { Status, Profile } from '../store/types';
+import { Profile } from '@/core/typings/profile';
+import { Status } from '@/core/typings/status';
 
 const getUserFromLS = () => {
   if (typeof window !== 'undefined') {
