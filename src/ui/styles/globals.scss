@@ -32,6 +32,17 @@ a {
   text-decoration: none;
 }
 
+ul,
+ol,
+li {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
 button {
   font: inherit;
 }
@@ -44,4 +55,8 @@ h5,
 h6,
 p {
   margin: 0;
+}
+
+img[alt] {
+  font-size: 8px;
 }
