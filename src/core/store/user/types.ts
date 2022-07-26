@@ -1,5 +1,5 @@
 import { Profile } from '@/core/typings/profile';
-import { Status } from '@/core/typings/status';
+import { Status } from '@/core/typings/redux';
 
 export type AuthProps = {
   username?: string;

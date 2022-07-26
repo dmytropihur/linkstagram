@@ -19,9 +19,14 @@
     "paths": {
       "@/core/*": ["src/core/*"],
       "@/ui/*": ["src/ui/*"],
-      "@/public/*": ["public/*"]
+      "@/images/*": ["public/images/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "src/core/typings/declaration.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
   "exclude": ["node_modules"]
 }

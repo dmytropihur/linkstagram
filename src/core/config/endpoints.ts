@@ -3,4 +3,5 @@ export const API_ENDPOINTS = {
   login: '/login',
   register: '/create-account',
   profiles: '/profiles',
+  posts: '/posts',
 };

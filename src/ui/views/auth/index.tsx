@@ -1,4 +1,4 @@
-import Image from 'next/future/image';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -10,9 +10,10 @@ import { useAppDispatch } from '@/core/store';
 import selectUser from '@/core/store/user/selectors';
 import { login, register } from '@/core/store/user/slice';
 import { AuthProps } from '@/core/store/user/types';
-import image from '@/public/images/auth.png';
 import Error from '@/ui/components/error';
 import Form from '@/ui/components/form';
+
+import image from '../../../../public/images/auth.png';
 
 import styles from './auth.module.scss';
 
@@ -74,13 +75,15 @@ const Auth: React.FC<AuthPageProps> = ({ type }) => {
 
   return (
     <section className={styles.section}>
-      <Image
-        className={styles.img}
-        src={image.src}
-        alt="Auth page image"
-        width={452}
-        height={684}
-      />
+      <div className={styles['img-wrapper']}>
+        <Image
+          className={styles.img}
+          src={image.src}
+          alt="Auth page image"
+          width={452}
+          height={684}
+        />
+      </div>
       <div className={styles.wrapper}>
         {error && (
           <Error>

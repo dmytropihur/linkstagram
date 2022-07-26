@@ -8,6 +8,7 @@
   background-image: linear-gradient(white, white), radial-gradient(circle at bottom left, #74edf2 0%, #5156e6 100%);
   background-origin: border-box;
   background-clip: content-box, border-box;
+  position: relative;
 }
 
 .gradient-sm {
@@ -26,45 +27,72 @@
   border-radius: 24px;
 }
 
+.noGradient {
+  display: none;
+}
+
+.img-wrapper {
+  font-size: 0;
+  position: relative;
+}
+
+.icon-wrapper-sm {
+  height: 40px;
+  width: 40px;
+}
+
+.icon-wrapper-md {
+  height: 64px;
+  width: 64px;
+}
+
+.icon-wrapper-lg {
+  height: 88px;
+  width: 88px;
+}
+
+.icon-wrapper-sm-gradient {
+  height: 32px;
+  width: 32px;
+  filter: $filter-drop-shadow;
+}
+
+.icon-wrapper-md-gradient {
+  height: 56px;
+  width: 56px;
+  filter: $filter-drop-shadow;
+}
+
+.icon-wrapper-lg-gradient {
+  height: 80px;
+  width: 80px;
+  filter: $filter-drop-shadow;
+}
+
 .icon {
-  border: 0.5px solid #c9cad1;
+  border: 0.5px solid #c9cad1 !important;
 }
 
 .icon-sm {
-  height: 40px;
-  width: 40px;
   border-radius: 12px;
 }
 
 .icon-md {
-  height: 64px;
-  width: 64px;
   border-radius: 16px;
 }
 
 .icon-lg {
-  height: 88px;
-  width: 88px;
   border-radius: 24px;
 }
 
 .icon-sm-gradient {
-  height: 32px;
-  width: 32px;
   border-radius: 8px;
-  filter: $filter-drop-shadow;
 }
 
 .icon-md-gradient {
-  height: 56px;
-  width: 56px;
   border-radius: 12px;
-  filter: $filter-drop-shadow;
 }
 
 .icon-lg-gradient {
-  height: 80px;
-  width: 80px;
   border-radius: 20px;
-  filter: $filter-drop-shadow;
 }
