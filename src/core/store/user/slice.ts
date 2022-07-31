@@ -42,6 +42,8 @@ export const register = createAsyncThunk(
       return res;
     } catch (err: unknown) {
       if (err instanceof AxiosError) {
+        console.log(err.request);
+
         const error = JSON.parse(err?.request?.response);
 
         return rejectWithValue(error['field-error'][1]);

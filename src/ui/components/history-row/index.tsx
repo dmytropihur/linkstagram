@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { Mousewheel } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { useAppDispatch } from '@/core/store';
 import selectProfiles from '@/core/store/profiles/selectors';
@@ -9,6 +11,8 @@ import useWindowSize from '@/ui/hooks/use-get-window-size';
 import Avatar from '../avatar';
 
 import styles from './history-row.module.scss';
+import 'swiper/css/pagination';
+import 'swiper/css';
 
 const History: React.FC = () => {
   const { profiles } = useSelector(selectProfiles);
@@ -21,16 +25,23 @@ const History: React.FC = () => {
 
   return (
     <div className={styles.mask}>
-      <ul className={styles.list}>
+      <Swiper
+        slidesPerView="auto"
+        spaceBetween={24}
+        grabCursor
+        mousewheel
+        modules={[Mousewheel]}
+      >
         {profiles?.map((item) => (
-          <li key={item.username} className={styles.item}>
+          <SwiperSlide key={item.username} className={styles.item}>
             <Avatar
               size={windowSize.width < 1024 ? 'sm' : 'md'}
               src={item.profile_photo_url}
+              gradient
             />
-          </li>
+          </SwiperSlide>
         ))}
-      </ul>
+      </Swiper>
     </div>
   );
 };

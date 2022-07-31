@@ -1,10 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   swcMinify: true,
-  experimental: {
-    images: {},
-  },
   images: {
     domains: ['linkstagram-api-prod.fra1.digitaloceanspaces.com'],
   },

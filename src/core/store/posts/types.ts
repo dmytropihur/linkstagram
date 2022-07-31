@@ -3,6 +3,7 @@ import { Status } from '@/core/typings/redux';
 
 export interface PostsSliceState {
   error: string | null;
-  posts: Post[] | null;
+  posts: Post[];
   status: Status;
+  totalQuantity: number;
 }

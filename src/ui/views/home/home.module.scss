@@ -15,7 +15,26 @@
 }
 
 .post-list {
+  @media (min-width: 375px) {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  @media (min-width: 1024px) {
+    display: flex;
+    flex-direction: column;
+    gap: 54px;
+  }
+}
+
+.bottom {
+  height: 200px;
+}
+
+.loader {
+  height: 200px;
   display: flex;
-  flex-direction: column;
-  gap: 24px;
+  align-items: center;
+  justify-content: center;
 }
