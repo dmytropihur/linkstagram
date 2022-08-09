@@ -1,4 +1,5 @@
-import Status from '../types';
+import { Profile } from '@/core/typings/profile';
+import { Status } from '@/core/typings/redux';
 
 export type AuthProps = {
   username?: string;
@@ -6,20 +7,8 @@ export type AuthProps = {
   password: string;
 };
 
-export type User = {
-  username: string;
-  description: string;
-  email: string;
-  first_name: string;
-  followers: number;
-  following: number;
-  job_title: string;
-  last_name: string;
-  profile_photo_url: string;
-};
-
 export interface UserSliceState {
   error: string | null;
   status: Status;
-  user: User | null;
+  user: Profile | null;
 }

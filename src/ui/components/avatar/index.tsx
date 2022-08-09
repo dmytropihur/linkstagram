@@ -1,37 +1,64 @@
+import cn from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 
 import ROUTES from '@/core/config/routes';
-import icon from '@/public/images/icon.png';
+
+import undefinedUserImg from '../../../../public/images/undefined-user.jpg';
 
 import styles from './avatar.module.scss';
 
 type AvatarProps = {
   size: 'sm' | 'md' | 'lg';
   gradient?: boolean;
+  src: string | null;
 };
 
-const Avatar: React.FC<AvatarProps> = ({ size, gradient }) => {
+const Avatar: React.FC<AvatarProps> = ({ size, src, gradient }) => {
+  const [source, setSource] = useState(src);
+
   return (
     <Link href={ROUTES.profile}>
       <a className={styles.root}>
         <div
-          className={
-            gradient ? `${styles[`gradient-${size}`]} ${styles.gradient}` : ''
-          }
+          className={cn(
+            styles['gradient-wrapper'],
+            {
+              [styles[`gradient-${size}`]]: gradient,
+            },
+            { [styles.gradient]: gradient },
+          )}
         >
-          <Image
-            className={
-              gradient
-                ? `${styles[`icon-${size}-gradient`]} ${styles.icon}`
-                : `${styles[`icon-${size}`]} ${styles.icon}
-              `
-            }
-            width="100%"
-            height="100%"
-            src={icon.src}
-            alt="User avatar"
-          />
+          <div
+            className={cn(
+              styles['img-wrapper'],
+              {
+                [styles[`icon-wrapper-${size}-gradient`]]: gradient,
+              },
+              { [styles[`icon-wrapper-${size}`]]: !gradient },
+            )}
+          >
+            <Image
+              className={cn(
+                styles.icon,
+                {
+                  [styles[`icon-${size}`]]: !gradient,
+                },
+                {
+                  [styles[`icon-${size}-gradient`]]: gradient,
+                },
+              )}
+              onError={() => {
+                setSource(undefinedUserImg as unknown as string);
+              }}
+              width={88}
+              height={88}
+              layout="responsive"
+              src={source || undefinedUserImg}
+              alt="User avatar"
+            />
+          </div>
         </div>
       </a>
     </Link>

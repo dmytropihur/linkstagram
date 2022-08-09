@@ -1,0 +1,35 @@
+.mask {
+  padding-left: 32px;
+  mask: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 1) 8%,
+    rgba(255, 255, 255, 1) 70%,
+    rgba(255, 255, 255, 0) 98%
+  );
+
+  @media (min-width: 375px) {
+    margin: 0 0 24px -32px;
+  }
+
+  @media (min-width: 1024px) {
+    margin: 0 0 48px -32px;
+  }
+}
+
+.list {
+  padding-left: 32px;
+  margin-left: -32px;
+  display: flex;
+  gap: 16px;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  scrollbar-width: none;
+}
+
+.item {
+  position: relative;
+  z-index: 10;
+}

@@ -35,7 +35,7 @@ const Header: React.FC = () => {
               >
                 Logout
               </button>
-              <Avatar size="sm" gradient />
+              <Avatar src={user.profile_photo_url} size="sm" gradient />
             </>
           ) : (
             <>

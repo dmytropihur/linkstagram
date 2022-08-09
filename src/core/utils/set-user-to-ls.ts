@@ -1,6 +1,6 @@
-import { User } from '../store/user/types';
+import { Profile } from '@/core/typings/profile';
 
-const setUserToLS = (object: User) => {
+const setUserToLS = (object: Profile) => {
   localStorage.setItem('user', JSON.stringify(object));
 };
 

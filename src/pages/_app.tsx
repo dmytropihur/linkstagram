@@ -1,4 +1,5 @@
 import '../ui/styles/globals.scss';
+import '../ui/styles/swiper.scss';
 import type { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
 

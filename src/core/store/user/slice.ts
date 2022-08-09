@@ -2,11 +2,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 
+import { API_ENDPOINTS } from '@/core/config/endpoints';
 import axios from '@/core/services/api/axios';
 import fetchAccount from '@/core/services/fetch-account';
+import { Profile } from '@/core/typings/profile';
 import getUserFromLS from '@/core/utils/get-user-from-ls';
 
-import { AuthProps, User, UserSliceState } from './types';
+import { AuthProps, UserSliceState } from './types';
 
 const initialState: UserSliceState = getUserFromLS();
 
@@ -14,7 +16,7 @@ export const login = createAsyncThunk(
   'user/login',
   async (props: AuthProps, { rejectWithValue }) => {
     try {
-      const { headers } = await axios.post(`/login`, props);
+      const { headers } = await axios.post(API_ENDPOINTS.login, props);
 
       localStorage.setItem('token', headers.authorization);
 
@@ -35,11 +37,13 @@ export const register = createAsyncThunk(
   'user/register',
   async (props: AuthProps, { rejectWithValue }) => {
     try {
-      const res = await axios.post(`/create-account`, props);
+      const res = await axios.post(API_ENDPOINTS.register, props);
 
       return res;
     } catch (err: unknown) {
       if (err instanceof AxiosError) {
+        console.log(err.request);
+
         const error = JSON.parse(err?.request?.response);
 
         return rejectWithValue(error['field-error'][1]);
@@ -69,7 +73,7 @@ const userSlice = createSlice({
       .addCase(login.pending, (state) => {
         state.status = 'pending';
       })
-      .addCase(login.fulfilled, (state, action: PayloadAction<User>) => {
+      .addCase(login.fulfilled, (state, action: PayloadAction<Profile>) => {
         state.status = 'fulfilled';
         state.user = action.payload;
         state.error = null;

@@ -1,0 +1,63 @@
+@import '@/ui/styles/variables.scss';
+
+.interactions {
+  display: flex;
+  justify-content: space-between;
+  color: $primary-color;
+  font-weight: 600;
+}
+
+.interactions-wrapper {
+  display: flex;
+  gap: 40px;
+}
+
+.interaction-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.interaction-icon {
+  fill: $secondary-color;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.share-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  &:hover {
+    cursor: pointer;
+    .arrow {
+      transform: translateX(2px);
+    }
+  }
+}
+
+.share {
+  line-height: 1;
+}
+
+.arrow {
+  transition: all 0.2s ease-in-out;
+  fill: $primary-color;
+}
+
+.heart {
+  path {
+    &:hover {
+      fill: $error-color;
+    }
+  }
+}
+
+.comment {
+  path {
+    &:hover {
+      fill: $accent-color;
+    }
+  }
+}
