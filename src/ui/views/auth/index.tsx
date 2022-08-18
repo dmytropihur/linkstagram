@@ -34,7 +34,10 @@ const initialRegisterValues = {
 
 const RegisterSchema = Yup.object().shape({
   login: EMAIL_FIELD_VALIDATION,
-  username: Yup.string().min(6, 'Too Short!').required('Required'),
+  username: Yup.string()
+    .min(6, 'Too Short!')
+    .required('Required')
+    .matches(/^[^.]+$/, `Must not contain dots`),
   password: Yup.string().min(6, 'Too Short!').required('Required'),
 });
 

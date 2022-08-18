@@ -1,0 +1,57 @@
+@import '@/ui/styles/variables.scss';
+
+div.uppy-Dashboard-inner {
+  height: 345px !important;
+  max-width: 480px !important;
+  width: 100% !important;
+  border-radius: 12px;
+  border: 1px solid $secondary-color;
+  margin: 0 auto;
+  background-color: $white-color;
+}
+
+div.uppy-Dashboard-innerWrap {
+  border-radius: 12px;
+}
+
+[data-uppy-drag-drop-supported='true']div.uppy-Dashboard-AddFiles {
+  border: none;
+  margin: 0;
+}
+
+div.uppy-Dashboard-AddFiles-title {
+  font-size: 0;
+  height: 100%;
+  outline: transparent;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  &:before {
+    position: absolute;
+    content: 'Tap here to choose any photo from your library';
+    font-size: 12px;
+    font-weight: 600;
+    color: $secondary-color;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.66;
+    width: 182px;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+button.uppy-Dashboard-browse:hover,
+button.uppy-Dashboard-browse:focus {
+  border-bottom: 0px;
+}
+
+.uppy-Dashboard-AddFiles-title button {
+  height: 100%;
+  width: 100%;
+  display: block;
+  outline: transparent;
+  background-image: url('../../../public/images/image-picker-icon.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}

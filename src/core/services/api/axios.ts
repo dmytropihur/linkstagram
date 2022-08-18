@@ -6,7 +6,6 @@ const api = axios.create({
   baseURL: BASE_API_URL,
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const requestHandler = (request: AxiosRequestConfig) => {
   const token = localStorage.getItem('token');
 
