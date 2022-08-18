@@ -12,7 +12,7 @@ import styles from './avatar.module.scss';
 type AvatarProps = {
   size: 'sm' | 'md' | 'lg';
   gradient?: boolean;
-  src: string | null;
+  src: string | undefined | null;
 };
 
 const Avatar: React.FC<AvatarProps> = ({ size, src, gradient }) => {

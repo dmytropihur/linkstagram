@@ -1,0 +1,68 @@
+@import '@/ui/styles/_mixins.scss';
+@import '@/ui/styles/variables.scss';
+
+.container {
+  max-width: 305px;
+  width: 100%;
+  @media (min-width: 375px) {
+    display: none;
+  }
+  @media (min-width: 1200px) {
+    display: block;
+  }
+}
+
+.fixed {
+  position: sticky;
+  top: 30px;
+  max-width: 305px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+.info-wrapper {
+  @include flex-center;
+  gap: 20px;
+}
+
+.personal-wrapper {
+  @include flex-center;
+  gap: 8px;
+}
+
+.popularity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.num {
+  font-weight: 600;
+}
+
+.title {
+  color: $secondary-color;
+}
+
+.description {
+  font-size: 12px;
+  line-height: 1.66;
+  color: $text-color;
+  text-align: center;
+}
+
+.buttons-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  max-width: 220px;
+  margin: 0 auto;
+}
+
+.button {
+  white-space: nowrap;
+  padding: 10px 14px;
+}

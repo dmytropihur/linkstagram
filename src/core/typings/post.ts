@@ -15,3 +15,22 @@ export type Post = {
     },
   ];
 };
+
+export type NewPost = {
+  post: {
+    description: string;
+    photos_attributes: [
+      {
+        image: {
+          id: string;
+          storage: string;
+          metadata: {
+            filename: string;
+            size: number;
+            mime_type: string;
+          };
+        };
+      },
+    ];
+  };
+};
