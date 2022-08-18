@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { Post } from '@/core/typings/post';
 
 import AuthorBtn from '../../../../public/images/author-button.svg';
@@ -10,6 +12,8 @@ type AuthorProps = {
 };
 
 const Author: React.FC<AuthorProps> = ({ post }) => {
+  const [isListOpen, setIsListOpen] = useState(false);
+
   return (
     <div className={styles.root}>
       <div className={styles['author-wrapper']}>
@@ -19,7 +23,15 @@ const Author: React.FC<AuthorProps> = ({ post }) => {
           <span className={styles.time}>{post.created_at}</span>
         </div>
       </div>
-      <AuthorBtn className={styles['author-btn']} />
+      <AuthorBtn
+        className={styles['author-btn']}
+        onClick={() => setIsListOpen((prev) => !prev)}
+      />
+      {isListOpen && (
+        <ul className={styles['drop-list']}>
+          <li className={styles['drop-item']}>Delete</li>
+        </ul>
+      )}
     </div>
   );
 };

@@ -1,6 +1,7 @@
 @import '@/ui/styles/variables.scss';
 
 .root {
+  position: relative;
   display: flex;
   justify-content: space-between;
 }
@@ -29,4 +30,18 @@
       fill: $accent-color;
     }
   }
+}
+
+.drop-list {
+  max-width: 100px;
+  width: 100%;
+  position: absolute;
+  right: 0;
+  bottom: -40px;
+  border: 1px solid $secondary-color;
+}
+
+.drop-item {
+  padding: 10px 12px;
+  text-align: right;
 }
