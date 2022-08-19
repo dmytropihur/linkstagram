@@ -1,15 +1,18 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import ReactDom from 'react-dom';
 
 import styles from './modal.module.scss';
 
 type ModalProps = {
-  children: ReactNode;
   open: boolean;
   onClose: () => void;
 };
 
-const Modal: React.FC<ModalProps> = ({ children, open, onClose }) => {
+const Modal: React.FC<React.PropsWithChildren<ModalProps>> = ({
+  children,
+  open,
+  onClose,
+}) => {
   if (!open) return null;
 
   return ReactDom.createPortal(

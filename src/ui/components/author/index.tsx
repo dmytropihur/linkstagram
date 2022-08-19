@@ -15,8 +15,7 @@ const Author: React.FC<AuthorProps> = ({ post }) => {
       <div className={styles['author-wrapper']}>
         <Avatar size="sm" src={post.author.profile_photo_url} />
         <div className={styles.info}>
-          <span className={styles.name}>{post.author.first_name}</span>
-          <span className={styles.name}>{post.author.last_name}</span>
+          <span className={styles.name}>{post.author.username}</span>
           <span className={styles.time}>{post.created_at}</span>
         </div>
       </div>

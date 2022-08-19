@@ -20,7 +20,7 @@ type NewPostProps = {
 
 const CreatePost: React.FC<NewPostProps> = ({ setIsOpen }) => {
   const [previewImgUrl, setPreviewImgUrl] = useState('');
-  const [imageData, setImageData] = useState({} as UppyFile);
+  const [imageData, setImageData] = useState({} as UppyFile | null);
   const [description, setDescription] = useState('');
   const [isButtonDisable, setIsButtonDisable] = useState(true);
   const size = useWindowSize();
@@ -44,12 +44,12 @@ const CreatePost: React.FC<NewPostProps> = ({ setIsOpen }) => {
             photos_attributes: [
               {
                 image: {
-                  id: String(imageData.meta.key).slice(6),
+                  id: String(imageData?.meta.key).slice(6),
                   storage: 'cache',
                   metadata: {
-                    filename: imageData.name,
-                    size: imageData.size,
-                    mime_type: imageData.type as string,
+                    filename: imageData?.name || '',
+                    size: imageData?.size || 0,
+                    mime_type: imageData?.type as string,
                   },
                 },
               },
