@@ -20,7 +20,7 @@ type NewPostProps = {
 
 const CreatePost: React.FC<NewPostProps> = ({ setIsOpen }) => {
   const [previewImgUrl, setPreviewImgUrl] = useState('');
-  const [imageData, setImageData] = useState({} as UppyFile | null);
+  const [imageData, setImageData] = useState<UppyFile | null>(null);
   const [description, setDescription] = useState('');
   const [isButtonDisable, setIsButtonDisable] = useState(true);
   const size = useWindowSize();

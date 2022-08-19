@@ -31,11 +31,10 @@ const HomePage: React.FC = () => {
   const dispatch = useAppDispatch();
   const [currentPage, setCurrentPage] = useState(2);
 
-  const list = useMemo(() => {
-    return posts.map((post) => {
-      return <Post key={post.id} post={post} />;
-    });
-  }, [posts]);
+  const list = useMemo(
+    () => posts.map((post) => <Post key={post.id} post={post} />),
+    [posts],
+  );
 
   useEffect(() => {
     if (inView && posts.length < totalQuantity) {
