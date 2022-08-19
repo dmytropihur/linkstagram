@@ -4,6 +4,7 @@ import { AxiosError } from 'axios';
 
 import { API_ENDPOINTS } from '@/core/config/endpoints';
 import axios from '@/core/services/api/axios';
+import { NewPost } from '@/core/typings/post';
 
 import { PostsSliceState } from './types';
 
@@ -36,6 +37,25 @@ export const fetchPosts = createAsyncThunk(
   },
 );
 
+export const createPost = createAsyncThunk(
+  'posts/createPost',
+  async (post: NewPost, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${API_ENDPOINTS.posts}`, post);
+
+      return console.log(response.data);
+    } catch (err: unknown) {
+      if (err instanceof AxiosError) {
+        const error = JSON.parse(err?.request?.response);
+
+        return rejectWithValue(error['field-error'][1]);
+      }
+
+      return rejectWithValue('Error');
+    }
+  },
+);
+
 const postsSlice = createSlice({
   name: 'posts',
   initialState,
@@ -56,6 +76,17 @@ const postsSlice = createSlice({
         state.totalQuantity = +action.payload.total;
       })
       .addCase(fetchPosts.rejected, (state, action) => {
+        state.error = action.payload as string;
+        state.status = 'rejected';
+      })
+      .addCase(createPost.pending, (state) => {
+        state.status = 'pending';
+      })
+      .addCase(createPost.fulfilled, (state) => {
+        state.status = 'fulfilled';
+        state.error = null;
+      })
+      .addCase(createPost.rejected, (state, action) => {
         state.error = action.payload as string;
         state.status = 'rejected';
       });
