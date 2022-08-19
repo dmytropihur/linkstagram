@@ -14,6 +14,26 @@
   }
 }
 
+.author-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+
+.author-btn {
+  cursor: pointer;
+  g {
+    fill: $primary-color;
+    transition: all 0.2s ease-in-out;
+  }
+  &:hover {
+    g {
+      opacity: 1;
+      fill: $accent-color;
+    }
+  }
+}
+
 .top {
   display: flex;
   flex-direction: column;
@@ -52,4 +72,32 @@
 
 .description {
   color: $text-color;
+}
+
+.drop-list {
+  max-width: 150px;
+  width: 100%;
+  position: absolute;
+  right: 0;
+  top: 40px;
+  border: 1px solid $bg-color;
+  background-color: $bg-color;
+  z-index: 100;
+  border-bottom-left-radius: 5px;
+}
+
+.drop-item {
+  text-align: right;
+  &:hover {
+    background-color: $white-color;
+  }
+}
+
+.drop-button {
+  border: transparent;
+  background-color: transparent;
+  width: 100%;
+  text-align: right;
+  padding: 10px 12px;
+  cursor: pointer;
 }

@@ -56,6 +56,25 @@ export const createPost = createAsyncThunk(
   },
 );
 
+export const deletePost = createAsyncThunk(
+  'posts/deletePost',
+  async (id: number, { rejectWithValue }) => {
+    try {
+      await axios.delete(`${API_ENDPOINTS.posts}/${id}`);
+
+      return id;
+    } catch (err: unknown) {
+      if (err instanceof AxiosError) {
+        const error = JSON.parse(err?.request?.response);
+
+        return rejectWithValue(error['field-error'][1]);
+      }
+
+      return rejectWithValue('Error');
+    }
+  },
+);
+
 const postsSlice = createSlice({
   name: 'posts',
   initialState,
@@ -87,6 +106,18 @@ const postsSlice = createSlice({
         state.error = null;
       })
       .addCase(createPost.rejected, (state, action) => {
+        state.error = action.payload as string;
+        state.status = 'rejected';
+      })
+      .addCase(deletePost.pending, (state) => {
+        state.status = 'pending';
+      })
+      .addCase(deletePost.fulfilled, (state, action) => {
+        state.posts = state.posts.filter((post) => post.id !== action.payload);
+        state.status = 'fulfilled';
+        state.error = null;
+      })
+      .addCase(deletePost.rejected, (state, action) => {
         state.error = action.payload as string;
         state.status = 'rejected';
       });

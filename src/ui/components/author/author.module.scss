@@ -1,12 +1,6 @@
 @import '@/ui/styles/variables.scss';
 
 .root {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-}
-
-.author-wrapper {
   display: flex;
   gap: 16px;
 }
@@ -16,32 +10,4 @@
   font-size: 12px;
   line-height: 1.66;
   display: block;
-}
-
-.author-btn {
-  cursor: pointer;
-  g {
-    fill: $primary-color;
-    transition: all 0.2s ease-in-out;
-  }
-  &:hover {
-    g {
-      opacity: 1;
-      fill: $accent-color;
-    }
-  }
-}
-
-.drop-list {
-  max-width: 100px;
-  width: 100%;
-  position: absolute;
-  right: 0;
-  bottom: -40px;
-  border: 1px solid $secondary-color;
-}
-
-.drop-item {
-  padding: 10px 12px;
-  text-align: right;
 }
