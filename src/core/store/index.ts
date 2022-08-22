@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
+import logger from 'redux-logger';
 
 import posts from './posts/slice';
 import profiles from './profiles/slice';
@@ -11,6 +12,7 @@ export const store = configureStore({
     profiles,
     posts,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
