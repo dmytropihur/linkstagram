@@ -1,0 +1,107 @@
+@import '@/ui/styles/variables.scss';
+
+.root {
+  @media (min-width: 375px) {
+    padding: 32px 16px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  @media (min-width: 580px) {
+    padding: 48px 48px 70px;
+  }
+}
+
+.input-wrapper {
+  @media (min-width: 375px) {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+}
+
+.input-innerWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.input-innerWrapper .input {
+  padding: 10px 14px;
+}
+
+.button-wrapper {
+  @media (min-width: 375px) {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  @media (min-width: 580px) {
+    flex-direction: row-reverse;
+    gap: 12px;
+  }
+}
+
+.label {
+  color: $text-color;
+}
+
+.input {
+  display: block;
+  padding: 14px;
+  width: 100%;
+  border: 1px solid $secondary-color;
+  border-radius: 12px;
+  font: inherit;
+  resize: none;
+}
+
+.input-inner {
+  display: flex;
+  gap: 40px;
+}
+
+.user-avatar {
+  display: none;
+}
+
+.img-label {
+  display: flex;
+  align-items: center;
+}
+
+.img-wrapper {
+  object-fit: cover;
+  position: relative;
+  @media (min-width: 375px) {
+    width: 120px;
+    height: 120px;
+  }
+  @media (min-width: 580px) {
+    width: 148px;
+    height: 148px;
+  }
+  &:after {
+    position: absolute;
+    content: 'Choose new photo';
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 12px;
+    line-height: 1.66;
+    text-align: center;
+    padding: 4px 0;
+    color: $white-color;
+    background-color: rgba(1, 1, 1, 0.5);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+
+.img {
+  border-radius: 8px;
+}

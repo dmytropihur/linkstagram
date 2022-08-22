@@ -9,6 +9,7 @@ import { deletePost, fetchPosts } from '@/core/store/posts/slice';
 import selectUser from '@/core/store/user/selectors';
 import Button from '@/ui/components/button';
 import Confirm from '@/ui/components/confirm-alert';
+import Edit from '@/ui/components/edit-profile';
 import History from '@/ui/components/history-row';
 import Modal from '@/ui/components/modal';
 import NewPost from '@/ui/components/new-post';
@@ -26,6 +27,7 @@ const HomePage: React.FC = () => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [deletedPostId, setDeletedPostId] = useState(0);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const { user } = useSelector(selectUser);
 
   const { ref, inView } = useInView();
@@ -80,7 +82,12 @@ const HomePage: React.FC = () => {
             <div className={styles.bottom} ref={ref} />
           )}
         </div>
-        {user && <Card onNewPost={() => setIsCreateModalOpen(true)} />}
+        {user && (
+          <Card
+            onNewPost={() => setIsCreateModalOpen(true)}
+            onEditProfile={() => setIsEditModalOpen(true)}
+          />
+        )}
       </div>
       <Modal
         open={isCreateModalOpen}
@@ -98,6 +105,9 @@ const HomePage: React.FC = () => {
         >
           Are you sure you want to delete this post?
         </Confirm>
+      </Modal>
+      <Modal open={isEditModalOpen} onClose={() => setIsEditModalOpen(false)}>
+        <Edit onCancel={() => setIsEditModalOpen(false)} />
       </Modal>
       <Button
         variant="accent"

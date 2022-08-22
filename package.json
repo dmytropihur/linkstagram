@@ -24,6 +24,7 @@
     "react-redux": "^8.0.2",
     "react-spinners": "^0.13.4",
     "react-textarea-autosize": "^8.3.4",
+    "redux-logger": "^3.0.6",
     "sass": "^1.53.0",
     "swiper": "^8.3.2",
     "yup": "^0.32.11"

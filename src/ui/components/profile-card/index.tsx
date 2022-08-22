@@ -9,10 +9,10 @@ import styles from './profile-card.module.scss';
 
 type CardProps = {
   onNewPost: () => void;
-  onEditProfile?: () => void;
+  onEditProfile: () => void;
 };
 
-const Card: React.FC<CardProps> = ({ onNewPost }) => {
+const Card: React.FC<CardProps> = ({ onNewPost, onEditProfile }) => {
   const { user } = useSelector(selectUser);
 
   return (
@@ -36,7 +36,11 @@ const Card: React.FC<CardProps> = ({ onNewPost }) => {
         </div>
         <p className={styles.description}>{user?.description}</p>
         <div className={styles['buttons-wrapper']}>
-          <Button className={styles.button} variant="regular">
+          <Button
+            className={styles.button}
+            variant="regular"
+            onClick={onEditProfile}
+          >
             Edit profile
           </Button>
           <Button
