@@ -1,31 +1,39 @@
 import AwsS3 from '@uppy/aws-s3';
 import Uppy, { UppyFile } from '@uppy/core';
-import { useFormik } from 'formik';
-import Image from 'next/image';
+import { FormikProps, useFormik } from 'formik';
 import { ChangeEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
-import ReactTextareaAutosize from 'react-textarea-autosize';
+import Snackbar from '@mui/material/Snackbar';
 
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { BASE_API_URL } from '@/core/config/constants';
 import { useAppDispatch } from '@/core/store';
 import selectUser from '@/core/store/user/selectors';
 import { editProfile } from '@/core/store/user/slice';
 import useWindowSize from '@/ui/hooks/use-get-window-size';
 
-import undefinedUserImg from '../../../../public/images/undefined-user.jpg';
-import Button from '../button';
-
-import styles from './edit-profile.module.scss';
+import EditView from './view';
+import React from 'react';
 
 type EditProps = {
   onCancel: () => void;
 };
 
+export type FormikValues = {
+  username?: string;
+  description?: string;
+  first_name?: string;
+  last_name?: string;
+  job_title?: string;
+};
+
 const Edit: React.FC<EditProps> = ({ onCancel }) => {
-  const { user } = useSelector(selectUser);
+  const { user, status } = useSelector(selectUser);
   const size = useWindowSize();
   const [photoPreview, setPhotoPreview] = useState('');
   const [chosenPhotoData, setChosenPhotoData] = useState<UppyFile | null>(null);
+  const [isSnackBarOper, setIsSnackbarOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('Error');
   const dispatch = useAppDispatch();
 
   const uppy = new Uppy({
@@ -39,25 +47,32 @@ const Edit: React.FC<EditProps> = ({ onCancel }) => {
     companionUrl: `${BASE_API_URL}`,
   });
 
-  const formik = useFormik({
-    initialValues: {
-      username: user?.username,
-      first_name: user?.first_name,
-      last_name: user?.last_name,
-      job_title: user?.job_title,
-      description: user?.description,
-    },
-    onSubmit: (values) => {
-      if (chosenPhotoData) {
-        dispatch(
-          editProfile({
-            account: {
-              username: values.username,
-              description: values.description,
-              first_name: values.first_name,
-              last_name: values.last_name,
-              job_title: values.job_title,
-              profile_photo: {
+  uppy.on('upload-success', (data) => {
+    setChosenPhotoData(data);
+  });
+
+  const handleSnackbarClose = (
+    event: React.SyntheticEvent | Event,
+    reason?: string,
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setIsSnackbarOpen(false);
+  };
+
+  const submitEditing = async (values: FormikValues) => {
+    await dispatch(
+      editProfile({
+        account: {
+          username: values.username,
+          description: values.description,
+          first_name: values.first_name,
+          last_name: values.last_name,
+          job_title: values.job_title,
+          profile_photo: chosenPhotoData
+            ? {
                 id: String(chosenPhotoData?.meta.key).slice(6),
                 storage: 'cache',
                 metadata: {
@@ -65,32 +80,13 @@ const Edit: React.FC<EditProps> = ({ onCancel }) => {
                   size: chosenPhotoData.size,
                   mime_type: chosenPhotoData.type as string,
                 },
-              },
-            },
-          }),
-        );
-      }
-
-      if (!chosenPhotoData) {
-        dispatch(
-          editProfile({
-            account: {
-              username: values.username,
-              description: values.description,
-              first_name: values.first_name,
-              last_name: values.last_name,
-              job_title: values.job_title,
-            },
-          }),
-        );
-      }
-
-      console.log(chosenPhotoData);
-
-      console.log(values);
-      onCancel();
-    },
-  });
+              }
+            : null,
+        },
+      }),
+    );
+    onCancel();
+  };
 
   const onPhotoChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
@@ -109,113 +105,56 @@ const Edit: React.FC<EditProps> = ({ onCancel }) => {
         });
       } catch (err) {
         if (err.isRestriction) {
-          console.log('Restriction error:', err);
+          setErrorMessage(`Restriction: ${err}`);
+          setIsSnackbarOpen(true);
         } else {
-          console.error(err);
+          setErrorMessage(err);
+          setIsSnackbarOpen(true);
         }
       }
     });
   };
 
-  uppy.on('upload-success', (data) => {
-    setChosenPhotoData(data);
+  const formik: FormikProps<FormikValues> = useFormik<FormikValues>({
+    initialValues: {
+      username: user?.username,
+      first_name: user?.first_name,
+      last_name: user?.last_name,
+      job_title: user?.job_title,
+      description: user?.description,
+    },
+    onSubmit: submitEditing,
+  });
+
+  const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+    props,
+    ref,
+  ) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
   return (
-    <form className={styles.root} onSubmit={formik.handleSubmit}>
-      <div className={styles['input-wrapper']}>
-        <div className={styles['input-inner']}>
-          <label className={styles['img-label']} htmlFor="user-avatar">
-            <div className={styles['img-wrapper']}>
-              {photoPreview ? (
-                <Image
-                  src={photoPreview}
-                  layout="fill"
-                  className={styles.img}
-                />
-              ) : (
-                <Image
-                  src={user?.profile_photo_url || undefinedUserImg}
-                  alt="user-avatar"
-                  layout="fill"
-                  className={styles.img}
-                />
-              )}
-            </div>
-            <input
-              id="user-avatar"
-              className={styles['user-avatar']}
-              type="file"
-              onChange={onPhotoChange}
-            />
-          </label>
-          <div className={styles['input-innerWrapper']}>
-            <label className={styles.label} htmlFor="first-name">
-              First Name
-              <input
-                name="first_name"
-                className={styles.input}
-                value={formik.values.first_name}
-                type="text"
-                onChange={formik.handleChange}
-                id="first-name"
-              />
-            </label>
-            <label className={styles.label} htmlFor="second-name">
-              Second Name
-              <input
-                name="last_name"
-                className={styles.input}
-                value={formik.values.last_name}
-                type="text"
-                onChange={formik.handleChange}
-                id="second-name"
-              />
-            </label>
-          </div>
-        </div>
-        <label className={styles.label} htmlFor="nickname">
-          Nickname
-          <input
-            name="username"
-            className={styles.input}
-            value={formik.values.username}
-            type="text"
-            onChange={formik.handleChange}
-            id="nickname"
-          />
-        </label>
-        <label className={styles.label} htmlFor="job-title">
-          Job Title
-          <input
-            name="job_title"
-            className={styles.input}
-            value={formik.values.job_title}
-            type="text"
-            onChange={formik.handleChange}
-            id="job-title"
-          />
-        </label>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label className={styles.label} htmlFor="description">
-          Description
-          <ReactTextareaAutosize
-            className={styles.input}
-            onChange={formik.handleChange}
-            id="description"
-            minRows={size.width < 580 ? 1 : 2}
-            maxRows={2}
-            value={formik.values.description}
-          />
-        </label>
-      </div>
-      <div className={styles['button-wrapper']}>
-        <Button type="submit" variant="accent">
-          Save
-        </Button>
-        <Button onClick={onCancel}>Cancel</Button>
-      </div>
-    </form>
+    <>
+      <EditView
+        formik={formik}
+        photoPreview={photoPreview}
+        user={user}
+        status={status}
+        onPhotoChange={onPhotoChange}
+        size={size}
+        onCancel={onCancel}
+      />
+      <Snackbar
+        open={isSnackBarOper}
+        autoHideDuration={4000}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        onClose={handleSnackbarClose}
+      >
+        <Alert severity="error" onClose={handleSnackbarClose}>
+          {errorMessage}
+        </Alert>
+      </Snackbar>
+    </>
   );
 };
 
