@@ -4,4 +4,5 @@ export const API_ENDPOINTS = {
   register: '/create-account',
   profiles: '/profiles',
   posts: '/posts',
+  account: '/account',
 };

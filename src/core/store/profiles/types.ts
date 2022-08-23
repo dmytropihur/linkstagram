@@ -6,3 +6,22 @@ export interface ProfilesSliceState {
   profiles: Profile[] | null;
   status: Status;
 }
+
+export type EditProfile = {
+  account: {
+    username?: string;
+    profile_photo?: {
+      id: string;
+      storage: string;
+      metadata: {
+        filename: string;
+        size: number;
+        mime_type: string;
+      };
+    };
+    description?: string;
+    first_name?: string;
+    last_name?: string;
+    job_title?: string;
+  };
+};

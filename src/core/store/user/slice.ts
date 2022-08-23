@@ -7,6 +7,9 @@ import axios from '@/core/services/api/axios';
 import fetchAccount from '@/core/services/fetch-account';
 import { Profile } from '@/core/typings/profile';
 import getUserFromLS from '@/core/utils/get-user-from-ls';
+import setUserToLS from '@/core/utils/set-user-to-ls';
+
+import { EditProfile } from '../profiles/types';
 
 import { AuthProps, UserSliceState } from './types';
 
@@ -54,6 +57,25 @@ export const register = createAsyncThunk(
   },
 );
 
+export const editProfile = createAsyncThunk(
+  'profiles/editProfile',
+  async (payload: EditProfile, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.patch(API_ENDPOINTS.account, payload);
+
+      return data;
+    } catch (err: unknown) {
+      if (err instanceof AxiosError) {
+        const error = JSON.parse(err?.request?.response);
+
+        return rejectWithValue(error['field-error'][1]);
+      }
+
+      return rejectWithValue('Error');
+    }
+  },
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -90,6 +112,19 @@ const userSlice = createSlice({
         state.status = 'fulfilled';
       })
       .addCase(register.rejected, (state, action) => {
+        state.error = action.payload as string;
+        state.status = 'rejected';
+      })
+      .addCase(editProfile.pending, (state) => {
+        state.status = 'pending';
+      })
+      .addCase(editProfile.fulfilled, (state, action) => {
+        state.status = 'fulfilled';
+        state.user = action.payload;
+        state.error = null;
+        setUserToLS(action.payload);
+      })
+      .addCase(editProfile.rejected, (state, action) => {
         state.error = action.payload as string;
         state.status = 'rejected';
       });

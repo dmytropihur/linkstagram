@@ -7,7 +7,9 @@ import { useSelector } from 'react-redux';
 import ReactTextareaAutosize from 'react-textarea-autosize';
 
 import { BASE_API_URL } from '@/core/config/constants';
+import { useAppDispatch } from '@/core/store';
 import selectUser from '@/core/store/user/selectors';
+import { editProfile } from '@/core/store/user/slice';
 import useWindowSize from '@/ui/hooks/use-get-window-size';
 
 import undefinedUserImg from '../../../../public/images/undefined-user.jpg';
@@ -24,6 +26,7 @@ const Edit: React.FC<EditProps> = ({ onCancel }) => {
   const size = useWindowSize();
   const [photoPreview, setPhotoPreview] = useState('');
   const [chosenPhotoData, setChosenPhotoData] = useState<UppyFile | null>(null);
+  const dispatch = useAppDispatch();
 
   const uppy = new Uppy({
     autoProceed: true,
@@ -45,9 +48,47 @@ const Edit: React.FC<EditProps> = ({ onCancel }) => {
       description: user?.description,
     },
     onSubmit: (values) => {
+      if (chosenPhotoData) {
+        dispatch(
+          editProfile({
+            account: {
+              username: values.username,
+              description: values.description,
+              first_name: values.first_name,
+              last_name: values.last_name,
+              job_title: values.job_title,
+              profile_photo: {
+                id: String(chosenPhotoData?.meta.key).slice(6),
+                storage: 'cache',
+                metadata: {
+                  filename: chosenPhotoData.name,
+                  size: chosenPhotoData.size,
+                  mime_type: chosenPhotoData.type as string,
+                },
+              },
+            },
+          }),
+        );
+      }
+
+      if (!chosenPhotoData) {
+        dispatch(
+          editProfile({
+            account: {
+              username: values.username,
+              description: values.description,
+              first_name: values.first_name,
+              last_name: values.last_name,
+              job_title: values.job_title,
+            },
+          }),
+        );
+      }
+
       console.log(chosenPhotoData);
 
       console.log(values);
+      onCancel();
     },
   });
 
@@ -96,7 +137,7 @@ const Edit: React.FC<EditProps> = ({ onCancel }) => {
                 <Image
                   src={user?.profile_photo_url || undefinedUserImg}
                   alt="user-avatar"
-                  layout="responsive"
+                  layout="fill"
                   className={styles.img}
                 />
               )}
