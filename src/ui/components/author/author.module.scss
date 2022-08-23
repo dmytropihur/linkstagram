@@ -2,11 +2,6 @@
 
 .root {
   display: flex;
-  justify-content: space-between;
-}
-
-.author-wrapper {
-  display: flex;
   gap: 16px;
 }
 
@@ -15,18 +10,4 @@
   font-size: 12px;
   line-height: 1.66;
   display: block;
-}
-
-.author-btn {
-  cursor: pointer;
-  g {
-    fill: $primary-color;
-    transition: all 0.2s ease-in-out;
-  }
-  &:hover {
-    g {
-      opacity: 1;
-      fill: $accent-color;
-    }
-  }
 }
