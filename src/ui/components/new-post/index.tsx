@@ -2,11 +2,10 @@ import AwsS3 from '@uppy/aws-s3';
 import Uppy, { UppyFile } from '@uppy/core';
 import { Dashboard } from '@uppy/react';
 import { FormEvent, useState } from 'react';
-import { useSelector } from 'react-redux';
 import ReactTextareaAutosize from 'react-textarea-autosize';
 
 import { BASE_API_URL } from '@/core/config/constants';
-import { RootState, useAppDispatch } from '@/core/store';
+import { useAppDispatch } from '@/core/store';
 import { createPost } from '@/core/store/posts/slice';
 import Button from '@/ui/components/button';
 import useWindowSize from '@/ui/hooks/use-get-window-size';
@@ -20,7 +19,6 @@ type NewPostProps = {
 };
 
 const CreatePost: React.FC<NewPostProps> = ({ setIsOpen }) => {
-  const { posts } = useSelector((state: RootState) => state.posts);
   const [previewImgUrl, setPreviewImgUrl] = useState('');
   const [imageData, setImageData] = useState<UppyFile | null>(null);
   const [description, setDescription] = useState('');
@@ -61,8 +59,6 @@ const CreatePost: React.FC<NewPostProps> = ({ setIsOpen }) => {
       );
     } catch (error) {
       console.error('error: ', error);
-    } finally {
-      console.log(posts);
     }
 
     setIsOpen(false);

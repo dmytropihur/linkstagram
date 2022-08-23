@@ -1,11 +1,10 @@
 import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useSelector } from 'react-redux';
 import { SyncLoader } from 'react-spinners';
 
 import { RootState, useAppDispatch } from '@/core/store';
-// import selectPosts from '@/core/store/posts/selectors';
 import { deletePost, fetchPosts } from '@/core/store/posts/slice';
 import selectUser from '@/core/store/user/selectors';
 import Button from '@/ui/components/button';
@@ -37,13 +36,21 @@ const HomePage: React.FC = () => {
   const dispatch = useAppDispatch();
   const [currentPage, setCurrentPage] = useState(2);
 
-  const onDeleteConfirmHandler = () => {
-    try {
-      dispatch(deletePost(deletedPostId));
-    } catch (error) {
-      console.error(error);
-    }
+  const list = useMemo(
+    () =>
+      posts.map((post) => (
+        <Post
+          key={post.id}
+          post={post}
+          setDeletedPostId={setDeletedPostId}
+          setIsDeleteModalOpen={setIsDeleteModalOpen}
+        />
+      )),
+    [posts],
+  );
 
+  const onDeleteConfirmHandler = () => {
+    dispatch(deletePost(deletedPostId));
     setIsDeleteModalOpen(false);
   };
 
@@ -63,16 +70,7 @@ const HomePage: React.FC = () => {
       <div className={styles.container}>
         <div className={styles['posts-column']}>
           <History />
-          <ul className={styles['post-list']}>
-            {posts.map((post) => (
-              <Post
-                key={post.id}
-                post={post}
-                setDeletedPostId={setDeletedPostId}
-                setIsDeleteModalOpen={setIsDeleteModalOpen}
-              />
-            ))}
-          </ul>
+          <ul className={styles['post-list']}>{list}</ul>
           {status === 'pending' && (
             <div className={styles.loader}>
               <SyncLoader />
