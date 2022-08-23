@@ -1,8 +1,8 @@
 import AwsS3 from '@uppy/aws-s3';
-import Uppy from '@uppy/core';
+import Uppy, { UppyFile } from '@uppy/core';
 import { useFormik } from 'formik';
 import Image from 'next/image';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
 import ReactTextareaAutosize from 'react-textarea-autosize';
 
@@ -22,7 +22,8 @@ type EditProps = {
 const Edit: React.FC<EditProps> = ({ onCancel }) => {
   const { user } = useSelector(selectUser);
   const size = useWindowSize();
-  const [isPhotoChosen, setIsPhotoChosen] = useState(false);
+  const [photoPreview, setPhotoPreview] = useState('');
+  const [chosenPhotoData, setChosenPhotoData] = useState<UppyFile | null>(null);
 
   const uppy = new Uppy({
     autoProceed: true,
@@ -44,14 +45,18 @@ const Edit: React.FC<EditProps> = ({ onCancel }) => {
       description: user?.description,
     },
     onSubmit: (values) => {
+      console.log(chosenPhotoData);
+
       console.log(values);
     },
   });
 
   const onPhotoChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+
     const files = Array.from(e?.target?.files as FileList);
 
-    console.log(files);
+    setPhotoPreview(URL.createObjectURL(files[0]));
 
     files.forEach((file) => {
       try {
@@ -72,17 +77,8 @@ const Edit: React.FC<EditProps> = ({ onCancel }) => {
   };
 
   uppy.on('upload-success', (data) => {
-    console.log(data);
-    setIsPhotoChosen(true);
+    setChosenPhotoData(data);
   });
-
-  useEffect(() => {
-    if (!isPhotoChosen) return;
-
-    uppy.upload().then((result) => {
-      console.log(result);
-    });
-  }, [isPhotoChosen]);
 
   return (
     <form className={styles.root} onSubmit={formik.handleSubmit}>
@@ -90,12 +86,20 @@ const Edit: React.FC<EditProps> = ({ onCancel }) => {
         <div className={styles['input-inner']}>
           <label className={styles['img-label']} htmlFor="user-avatar">
             <div className={styles['img-wrapper']}>
-              <Image
-                src={user?.profile_photo_url || undefinedUserImg}
-                alt="user-avatar"
-                layout="responsive"
-                className={styles.img}
-              />
+              {photoPreview ? (
+                <Image
+                  src={photoPreview}
+                  layout="fill"
+                  className={styles.img}
+                />
+              ) : (
+                <Image
+                  src={user?.profile_photo_url || undefinedUserImg}
+                  alt="user-avatar"
+                  layout="responsive"
+                  className={styles.img}
+                />
+              )}
             </div>
             <input
               id="user-avatar"

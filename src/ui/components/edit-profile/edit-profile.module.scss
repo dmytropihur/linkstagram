@@ -75,7 +75,6 @@
 }
 
 .img-wrapper {
-  object-fit: cover;
   position: relative;
   @media (min-width: 375px) {
     width: 120px;
@@ -103,5 +102,6 @@
 }
 
 .img {
+  object-fit: cover;
   border-radius: 8px;
 }
