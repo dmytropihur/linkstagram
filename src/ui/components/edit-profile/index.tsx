@@ -1,11 +1,10 @@
 import AwsS3 from '@uppy/aws-s3';
 import Uppy, { UppyFile } from '@uppy/core';
 import { FormikProps, useFormik } from 'formik';
-import { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
-import Snackbar from '@mui/material/Snackbar';
+import { toast } from 'react-toastify';
 
-import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { BASE_API_URL } from '@/core/config/constants';
 import { useAppDispatch } from '@/core/store';
 import selectUser from '@/core/store/user/selectors';
@@ -13,7 +12,6 @@ import { editProfile } from '@/core/store/user/slice';
 import useWindowSize from '@/ui/hooks/use-get-window-size';
 
 import EditView from './view';
-import React from 'react';
 
 type EditProps = {
   onCancel: () => void;
@@ -32,8 +30,6 @@ const Edit: React.FC<EditProps> = ({ onCancel }) => {
   const size = useWindowSize();
   const [photoPreview, setPhotoPreview] = useState('');
   const [chosenPhotoData, setChosenPhotoData] = useState<UppyFile | null>(null);
-  const [isSnackBarOper, setIsSnackbarOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('Error');
   const dispatch = useAppDispatch();
 
   const uppy = new Uppy({
@@ -50,17 +46,6 @@ const Edit: React.FC<EditProps> = ({ onCancel }) => {
   uppy.on('upload-success', (data) => {
     setChosenPhotoData(data);
   });
-
-  const handleSnackbarClose = (
-    event: React.SyntheticEvent | Event,
-    reason?: string,
-  ) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setIsSnackbarOpen(false);
-  };
 
   const submitEditing = async (values: FormikValues) => {
     await dispatch(
@@ -85,6 +70,7 @@ const Edit: React.FC<EditProps> = ({ onCancel }) => {
         },
       }),
     );
+    document.body.style.overflow = '';
     onCancel();
   };
 
@@ -105,11 +91,9 @@ const Edit: React.FC<EditProps> = ({ onCancel }) => {
         });
       } catch (err) {
         if (err.isRestriction) {
-          setErrorMessage(`Restriction: ${err}`);
-          setIsSnackbarOpen(true);
+          toast(err, { type: 'error' });
         } else {
-          setErrorMessage(err);
-          setIsSnackbarOpen(true);
+          toast(err, { type: 'error' });
         }
       }
     });
@@ -126,35 +110,16 @@ const Edit: React.FC<EditProps> = ({ onCancel }) => {
     onSubmit: submitEditing,
   });
 
-  const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-    props,
-    ref,
-  ) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
-
   return (
-    <>
-      <EditView
-        formik={formik}
-        photoPreview={photoPreview}
-        user={user}
-        status={status}
-        onPhotoChange={onPhotoChange}
-        size={size}
-        onCancel={onCancel}
-      />
-      <Snackbar
-        open={isSnackBarOper}
-        autoHideDuration={4000}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        onClose={handleSnackbarClose}
-      >
-        <Alert severity="error" onClose={handleSnackbarClose}>
-          {errorMessage}
-        </Alert>
-      </Snackbar>
-    </>
+    <EditView
+      formik={formik}
+      photoPreview={photoPreview}
+      user={user}
+      status={status}
+      onPhotoChange={onPhotoChange}
+      size={size}
+      onCancel={onCancel}
+    />
   );
 };
 

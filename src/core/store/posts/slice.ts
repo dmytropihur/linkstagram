@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
 
 import { API_ENDPOINTS } from '@/core/config/endpoints';
 import axios from '@/core/services/api/axios';
@@ -113,10 +114,12 @@ const postsSlice = createSlice({
         state.posts.unshift(action.payload);
         state.status = 'fulfilled';
         state.error = null;
+        toast.success('New post was successfully created');
       })
       .addCase(createPost.rejected, (state, action) => {
         state.error = action.payload as string;
         state.status = 'rejected';
+        toast.error(action.payload as string);
       })
       .addCase(deletePost.pending, (state) => {
         state.status = 'pending';
@@ -125,10 +128,12 @@ const postsSlice = createSlice({
         state.posts = state.posts.filter((post) => post.id !== action.payload);
         state.status = 'fulfilled';
         state.error = null;
+        toast.success('Post was successfully deleted');
       })
       .addCase(deletePost.rejected, (state, action) => {
         state.error = action.payload as string;
         state.status = 'rejected';
+        toast.error(action.payload as string);
       });
   },
 });

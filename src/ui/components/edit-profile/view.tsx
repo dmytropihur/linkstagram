@@ -4,12 +4,12 @@ import { ChangeEvent } from 'react';
 import ReactTextareaAutosize from 'react-textarea-autosize';
 
 import { Profile } from '@/core/typings/profile';
+import { Status } from '@/core/typings/redux';
 
 import undefinedUserImg from '../../../../public/images/undefined-user.jpg';
 import Button from '../button';
 
 import styles from './edit-profile.module.scss';
-import { Status } from '@/core/typings/redux';
 
 type Props = {
   formik: FormikProps<FormikValues>;
@@ -38,9 +38,7 @@ const EditView: React.FC<Props> = ({
             <div className={styles['img-wrapper']}>
               <Image
                 src={
-                  photoPreview
-                    ? photoPreview
-                    : user?.profile_photo_url || undefinedUserImg
+                  photoPreview || user?.profile_photo_url || undefinedUserImg
                 }
                 alt="user-avatar"
                 layout="fill"
@@ -107,10 +105,17 @@ const EditView: React.FC<Props> = ({
         </label>
       </div>
       <div className={styles['button-wrapper']}>
-        <Button type="submit" variant="accent" disabled={status === 'pending'}>
+        <Button
+          className={styles.button}
+          type="submit"
+          variant="accent"
+          disabled={status === 'pending'}
+        >
           Save
         </Button>
-        <Button onClick={onCancel}>Cancel</Button>
+        <Button className={styles.button} onClick={onCancel}>
+          Cancel
+        </Button>
       </div>
     </form>
   );

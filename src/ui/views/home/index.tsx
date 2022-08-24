@@ -90,12 +90,18 @@ const HomePage: React.FC = () => {
         )}
       </div>
       <Modal
+        className={styles['create-modal']}
         open={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
       >
-        <NewPost setIsOpen={setIsCreateModalOpen} />
+        <NewPost
+          onClose={() => {
+            setIsCreateModalOpen(false);
+          }}
+        />
       </Modal>
       <Modal
+        className={styles['delete-modal']}
         open={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
       >
@@ -106,7 +112,11 @@ const HomePage: React.FC = () => {
           Are you sure you want to delete this post?
         </Confirm>
       </Modal>
-      <Modal open={isEditModalOpen} onClose={() => setIsEditModalOpen(false)}>
+      <Modal
+        className={styles['edit-modal']}
+        open={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+      >
         <Edit onCancel={() => setIsEditModalOpen(false)} />
       </Modal>
       <Button

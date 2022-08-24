@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
 
 import { API_ENDPOINTS } from '@/core/config/endpoints';
 import axios from '@/core/services/api/axios';
@@ -45,8 +46,6 @@ export const register = createAsyncThunk(
       return res;
     } catch (err: unknown) {
       if (err instanceof AxiosError) {
-        console.log(err.request);
-
         const error = JSON.parse(err?.request?.response);
 
         return rejectWithValue(error['field-error'][1]);
@@ -110,10 +109,12 @@ const userSlice = createSlice({
       .addCase(register.fulfilled, (state) => {
         state.error = null;
         state.status = 'fulfilled';
+        toast.success('Your account was successfully created');
       })
       .addCase(register.rejected, (state, action) => {
         state.error = action.payload as string;
         state.status = 'rejected';
+        toast.error(action.payload as string);
       })
       .addCase(editProfile.pending, (state) => {
         state.status = 'pending';
@@ -123,10 +124,12 @@ const userSlice = createSlice({
         state.user = action.payload;
         state.error = null;
         setUserToLS(action.payload);
+        toast.success('Your profile was successfully updated');
       })
       .addCase(editProfile.rejected, (state, action) => {
         state.error = action.payload as string;
         state.status = 'rejected';
+        toast.error(action.payload as string);
       });
   },
 });

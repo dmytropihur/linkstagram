@@ -12,6 +12,11 @@ const Confirm: React.FC<React.PropsWithChildren<ConfirmProps>> = ({
   onCancel,
   children,
 }) => {
+  const onConfirmHandler = () => {
+    document.body.style.overflow = '';
+    onConfirm();
+  };
+
   return (
     <div className={styles.root}>
       <span className={styles.text}>{children}</span>
@@ -20,7 +25,7 @@ const Confirm: React.FC<React.PropsWithChildren<ConfirmProps>> = ({
           variant="accent"
           type="button"
           className={styles.button}
-          onClick={onConfirm}
+          onClick={onConfirmHandler}
         >
           Confirm
         </Button>
