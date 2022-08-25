@@ -15,8 +15,12 @@ type AvatarProps = {
   src?: string | null;
 };
 
-const Avatar: React.FC<AvatarProps> = ({ size, src, gradient }) => {
-  const [source, setSource] = useState(src);
+const Avatar: React.FC<AvatarProps> = ({
+  size,
+  src = undefinedUserImg,
+  gradient,
+}) => {
+  const [imageError, setImageError] = useState(false);
 
   return (
     <Link href={ROUTES.profile}>
@@ -49,13 +53,15 @@ const Avatar: React.FC<AvatarProps> = ({ size, src, gradient }) => {
                   [styles[`icon-${size}-gradient`]]: gradient,
                 },
               )}
-              onError={() => {
-                setSource(undefinedUserImg as unknown as string);
-              }}
+              onError={() => setImageError(true)}
               width={88}
               height={88}
               layout="responsive"
-              src={source || undefinedUserImg}
+              src={
+                imageError
+                  ? undefinedUserImg
+                  : src || (undefinedUserImg as unknown as string)
+              }
               alt="User avatar"
             />
           </div>

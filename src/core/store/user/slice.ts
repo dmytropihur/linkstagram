@@ -1,12 +1,16 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
 
 import { API_ENDPOINTS } from '@/core/config/endpoints';
 import axios from '@/core/services/api/axios';
 import fetchAccount from '@/core/services/fetch-account';
 import { Profile } from '@/core/typings/profile';
 import getUserFromLS from '@/core/utils/get-user-from-ls';
+import setUserToLS from '@/core/utils/set-user-to-ls';
+
+import { EditProfile } from '../profiles/types';
 
 import { AuthProps, UserSliceState } from './types';
 
@@ -42,8 +46,25 @@ export const register = createAsyncThunk(
       return res;
     } catch (err: unknown) {
       if (err instanceof AxiosError) {
-        console.log(err.request);
+        const error = JSON.parse(err?.request?.response);
 
+        return rejectWithValue(error['field-error'][1]);
+      }
+
+      return rejectWithValue('Error');
+    }
+  },
+);
+
+export const editProfile = createAsyncThunk(
+  'profiles/editProfile',
+  async (payload: EditProfile, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.patch(API_ENDPOINTS.account, payload);
+
+      return data;
+    } catch (err: unknown) {
+      if (err instanceof AxiosError) {
         const error = JSON.parse(err?.request?.response);
 
         return rejectWithValue(error['field-error'][1]);
@@ -88,10 +109,27 @@ const userSlice = createSlice({
       .addCase(register.fulfilled, (state) => {
         state.error = null;
         state.status = 'fulfilled';
+        toast.success('Your account was successfully created');
       })
       .addCase(register.rejected, (state, action) => {
         state.error = action.payload as string;
         state.status = 'rejected';
+        toast.error(action.payload as string);
+      })
+      .addCase(editProfile.pending, (state) => {
+        state.status = 'pending';
+      })
+      .addCase(editProfile.fulfilled, (state, action) => {
+        state.status = 'fulfilled';
+        state.user = action.payload;
+        state.error = null;
+        setUserToLS(action.payload);
+        toast.success('Your profile was successfully updated');
+      })
+      .addCase(editProfile.rejected, (state, action) => {
+        state.error = action.payload as string;
+        state.status = 'rejected';
+        toast.error(action.payload as string);
       });
   },
 });

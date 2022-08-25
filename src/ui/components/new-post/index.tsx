@@ -1,6 +1,7 @@
 import AwsS3 from '@uppy/aws-s3';
 import Uppy, { UppyFile } from '@uppy/core';
 import { Dashboard } from '@uppy/react';
+import cn from 'classnames';
 import { FormEvent, useState } from 'react';
 import ReactTextareaAutosize from 'react-textarea-autosize';
 
@@ -15,10 +16,10 @@ import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 
 type NewPostProps = {
-  setIsOpen: (state: boolean) => void;
+  onClose: () => void;
 };
 
-const CreatePost: React.FC<NewPostProps> = ({ setIsOpen }) => {
+const CreatePost: React.FC<NewPostProps> = ({ onClose }) => {
   const [previewImgUrl, setPreviewImgUrl] = useState('');
   const [imageData, setImageData] = useState<UppyFile | null>(null);
   const [description, setDescription] = useState('');
@@ -33,35 +34,36 @@ const CreatePost: React.FC<NewPostProps> = ({ setIsOpen }) => {
     },
   });
 
-  const onPublishHandler = (e: FormEvent<HTMLFormElement>) => {
+  const onCloseHandler = () => {
+    document.body.style.overflow = '';
+    onClose();
+  };
+
+  const onPublishHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    try {
-      dispatch(
-        createPost({
-          post: {
-            description,
-            photos_attributes: [
-              {
-                image: {
-                  id: String(imageData?.meta.key).slice(6),
-                  storage: 'cache',
-                  metadata: {
-                    filename: imageData?.name || '',
-                    size: imageData?.size || 0,
-                    mime_type: imageData?.type as string,
-                  },
+    await dispatch(
+      createPost({
+        post: {
+          description,
+          photos_attributes: [
+            {
+              image: {
+                id: String(imageData?.meta.key).slice(6),
+                storage: 'cache',
+                metadata: {
+                  filename: imageData?.name || '',
+                  size: imageData?.size || 0,
+                  mime_type: imageData?.type as string,
                 },
               },
-            ],
-          },
-        }),
-      );
-    } catch (error) {
-      console.error('error: ', error);
-    }
+            },
+          ],
+        },
+      }),
+    );
 
-    setIsOpen(false);
+    onCloseHandler();
   };
 
   uppy.use(AwsS3, {
@@ -98,13 +100,18 @@ const CreatePost: React.FC<NewPostProps> = ({ setIsOpen }) => {
             />
           </label>
           <div className={styles['button-wrapper']}>
-            <Button type="submit" variant="accent" disabled={isButtonDisable}>
+            <Button
+              className={styles.button}
+              type="submit"
+              variant="accent"
+              disabled={isButtonDisable}
+            >
               Publish
             </Button>
             <Button
-              className={styles['cancel-button']}
+              className={cn(styles['cancel-button'], styles.button)}
               variant="regular"
-              onClick={() => setIsOpen(false)}
+              onClick={onCloseHandler}
             >
               Cancel
             </Button>
