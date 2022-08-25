@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 
 import { store } from '@/core/store';
 import Layout from '@/ui/components/layout';
+import Snackbar from '@/ui/components/snackbar';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
@@ -14,6 +15,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <Layout>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <Component {...pageProps} />
+        <Snackbar />
       </Layout>
     </Provider>
   );

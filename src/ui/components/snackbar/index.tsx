@@ -2,10 +2,6 @@ import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// type SnackbarProps = {
-//   variant: 'info' | 'success' | 'warning' | 'error';
-// };
-
 const Snackbar: React.FC = () => {
   return (
     <ToastContainer
